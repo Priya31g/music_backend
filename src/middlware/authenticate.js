@@ -23,7 +23,7 @@ try{
 
 function veryfyToken(token){
         return new Promise(function(resolve,reject){
-        jwt.verify(token,process.env.JWT_SECRET_KEY,function(err,user){
+        jwt.verify(token,`masaischool`,function(err,user){
             if(err)return  reject(err);
 
             return resolve(user)

@@ -12,8 +12,8 @@ const {newToken} = require("../src/Controllers/auth.controller")
 
 
 passport.use(new GoogleStrategy({
-    clientID:process.env.GOOGLE_CLIENT_ID,
-    clientSecret:process.env.GOOGLE_CLIENT_SECRET,
+    clientID:`453861975001-nggoq81umaum21gh85e7t5ocbc7hppki.apps.googleusercontent.com`,
+    clientSecret:`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`,
     callbackURL: "http://localhost:2100/auth/google/callback",
     // userProfileURL:"",
     // passReqToCallback   : true

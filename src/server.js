@@ -58,7 +58,7 @@ app.use('/songs',songController);
 app.use('/artists',artistController);
 app.use('/album',albumController);
 
-app.listen(2100,async ()=>{
+app.listen(process.env.PORT||2100,async ()=>{
   let data= await  connect();
     console.log("listening on port 2100")
 })
