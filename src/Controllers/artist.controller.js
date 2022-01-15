@@ -21,6 +21,10 @@ router.get('/:id',async (req,res)=>{
     res.send({artist_,total_pages:1})
 })
 
+router.get('/filteredByName/:name',async (req,res)=>{
+    const artist_ = await Artists.find({name:req.params.name}).lean().exec();
+    res.send({artist_,total_pages:1})
+})
 
 //Post Operation 
 router.post('/',
