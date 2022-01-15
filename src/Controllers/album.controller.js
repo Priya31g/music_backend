@@ -1,6 +1,6 @@
 const Album = require('../models/album.model');
 const {body,validationResult} = require("express-validator");
-
+const Artist = require("../models/artist.model")
 const express = require('express');
 
 const router = express.Router();
@@ -18,8 +18,10 @@ router.get('/',async(req,res)=>{
 })
 
 router.get('/:id',async(req,res)=>{
+
     const album = await Album.findById(req.params.id).populate('songs').lean().exec();
-    res.send({album,total_pages:1})
+    const artist = await Artist.findById(album.name).lean().exec();
+    res.send({album,total_pages:1,artist})
 })
 
 
@@ -28,6 +30,7 @@ router.get('/sort',async(req,res)=>{
     const page = +req.query.page||1;
     const size = +req.query.size||5;
     const offset = (page-1)*5;
+
     const album = await Album.find().sort({year:1}).populate('songs').skip(offset).limit(size);
     const totalAlbumCount = await Album.find().count();
     const total_pages=Math.ceil(totalAlbumCount/size);
