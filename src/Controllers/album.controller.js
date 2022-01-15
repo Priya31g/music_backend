@@ -26,7 +26,7 @@ router.get('/:id',async(req,res)=>{
 
 
 
-router.get('/sort',async(req,res)=>{
+router.get('/sort_year',async(req,res)=>{
     const page = +req.query.page||1;
     const size = +req.query.size||5;
     const offset = (page-1)*5;
