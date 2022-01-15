@@ -24,6 +24,35 @@ router.get('/:id',async(req,res)=>{
     res.send({album,total_pages:1,artist})
 })
 
+router.get('/filterByName/:name',async(req,res)=>{
+    const page = +req.query.page||1;
+    const size = +req.query.size||5;
+    const offset = (page-1)*5;
+    const artist = await Artist.findById(req.params.name).lean().exec();
+    if(artist){
+        const album = await Album.find({name:artist._id}).populate('songs').skip(offset).limit(size).lean().exec();
+
+        const totalAlbumCount = await Album.find({name:artist._id}).count();
+    const total_pages=Math.ceil(totalAlbumCount/size);
+        res.send({album,artist,total_pages})
+    }else{
+        res.send("No Data Found");
+    }
+    
+})
+router.get('/filterByGenre/:genre',async(req,res)=>{
+    const page = +req.query.page||1;
+    const size = +req.query.size||5;
+    const offset = (page-1)*5;
+    
+        const album = await Album.find({genre:req.params.genre}).populate('songs').skip(offset).limit(size).lean().exec();
+        const totalAlbumCount = await Album.find({genre:req.params.genre}).count();
+        const total_pages=Math.ceil(totalAlbumCount/size);
+            res.send({album,total_pages})
+    
+    
+})
+
 
 
 router.get('/sort_year',async(req,res)=>{
@@ -31,7 +60,7 @@ router.get('/sort_year',async(req,res)=>{
     const size = +req.query.size||5;
     const offset = (page-1)*5;
 
-    const album = await Album.find().sort({year:1}).populate('songs').skip(offset).limit(size);
+    const album = await Album.find().sort({year:-1}).populate('songs').skip(offset).limit(size);
     const totalAlbumCount = await Album.find().count();
     const total_pages=Math.ceil(totalAlbumCount/size);
 
