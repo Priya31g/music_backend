@@ -10,11 +10,16 @@ router.get('/',async(req,res)=>{
     const page = +req.query.page||1;
     const size = +req.query.size||5;
     const offset = (page-1)*5;
-    const album = await Album.find().populate({path:'artists'}).populate('songs').skip(offset).limit(size).lean().exec();
-    const totalAlbumCount = await Album.find().count();
-    const total_pages=Math.ceil(totalAlbumCount/size);
-
-    res.send({album,total_pages});
+    try{
+        const album = await Album.find().populate({path:'artists'}).populate('songs').skip(offset).limit(size).lean().exec();
+        const totalAlbumCount = await Album.find().count();
+        const total_pages=Math.ceil(totalAlbumCount/size);
+    
+        res.send({album,total_pages});
+    }catch(err){
+        console.log(err)
+    }
+   
 })
 
 router.get('/:id',async(req,res)=>{
