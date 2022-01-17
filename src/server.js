@@ -9,7 +9,12 @@ const songController = require('./Controllers/songs.controller');
 const albumController = require('./Controllers/album.controller')
 
 const app = express();
+app.use(cors());
+
+app.use(express.urlencoded({ extended: false }));
+
 app.use(express.json());
+
 const {signin,signup,newToken} =require("./Controllers/auth.controller");
 
 app.use(passport.initialize());
