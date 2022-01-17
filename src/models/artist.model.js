@@ -20,4 +20,4 @@ artistSchema.methods.checkPassword = function(password) {
 
     return match;
 }
-module.exports=mongoose.model("artist", artistSchema);
+module.exports=mongoose.model("artists", artistSchema);
