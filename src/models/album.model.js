@@ -1,6 +1,7 @@
 const mongoose =require("mongoose");
 const albumSchema = new mongoose.Schema({
     name:{type:mongoose.Schema.Types.ObjectId,ref:'artists',required:true},
+    artist_name:{type:String,required:true},
     genre:{type:String,required:true},
     year:{type:String,required:true},
     songs:[{type:mongoose.Schema.Types.ObjectId,ref:'songs',required:true}],

@@ -11,7 +11,7 @@ router.get('/',async(req,res)=>{
     const size = +req.query.size||5;
     const offset = (page-1)*5;
     try{
-        const album = await Album.find().populate('artists').skip(offset).limit(size).lean().exec();
+        const album = await Album.find().skip(offset).limit(size).lean().exec();
         const totalAlbumCount = await Album.find().count();
         const total_pages=Math.ceil(totalAlbumCount/size);
     
